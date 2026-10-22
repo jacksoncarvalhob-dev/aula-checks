@@ -1,0 +1,28 @@
+
+name: Testes da calculadora
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar ferramentas
+        run: pip install pytest pytest-cov
+
+      - name: Executar testes e verificar cobertura
+        run: pytest --cov=calculadora --cov-report=term-missing --cov-fail-under=80
